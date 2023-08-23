@@ -19,7 +19,7 @@ class Review(models.Model):
         return str(self.reviewer) + " | " + str(self.rating)
 
 class Topic(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=25)
 
     def __str__(self):
         return self.name
@@ -33,13 +33,7 @@ class Project(models.Model):
     private = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag, blank=True)
     reviews = models.ManyToManyField(Review, blank=True)
+    topics = models.ManyToManyField(Topic)
 
     def __str__(self):
         return self.title + " | " + str(self.creator)
-
-class ProjectTopic(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Project: {self.project.title} | Topic: {self.topic.name}"
